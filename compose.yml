@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:17.4-alpine
+    restart: always
+    shm_size: 128mb
+    volumes:
+      - db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=pcpartradar
+      - POSTGRES_PASSWORD=pcpartradar
+      - POSTGRES_DB=pcpartradar
+    ports:
+      - 5432:5432
+
+volumes:
+  db:
