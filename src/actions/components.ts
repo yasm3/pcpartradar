@@ -1,6 +1,11 @@
-import { desc, eq } from "drizzle-orm";
+import { desc, eq, sql } from "drizzle-orm";
 import { db } from "../app";
-import { components } from "../db/schema/components";
+import {
+  brands,
+  categories,
+  components,
+  gpuModels,
+} from "../db/schema/components";
 import { prices, vendors } from "../db/schema/vendors";
 
 export function getComponent(slug: string) {
@@ -22,11 +27,44 @@ export async function getLatestComponentPricesByVendor(componentId: number) {
     .orderBy(prices.vendorId, desc(prices.scrapedAt));
 
   const deduped = new Map<string, (typeof latestPrices)[0]>();
-  latestPrices.forEach(price => {
+  latestPrices.forEach((price) => {
     if (!deduped.has(price.vendorName)) {
       deduped.set(price.vendorName, price);
     }
   });
 
   return Array.from(deduped.values());
+}
+
+export async function getPaginatedComponents(pageNum: number) {
+  const maxByPage = 5; // 5 components by page
+  const offset = (pageNum - 1) * maxByPage;
+  const componentsResult = await db
+    .select()
+    .from(components)
+    .limit(maxByPage)
+    .offset(offset);
+
+  return componentsResult;
+}
+
+export async function getComponentByName(name: string) {
+  return await db
+    .select({
+      name: components.name,
+      slug: components.slug,
+      imageUrl: components.imageUrl,
+      category: categories.name,
+      brand: brands.name,
+      gpuModel: gpuModels.name,
+      createdAt: components.createdAt,
+    })
+    .from(components)
+    .where(
+      sql`to_tsvector('english', ${components.name}) @@ to_tsquery('english', ${name})`
+    )
+    .innerJoin(categories, eq(components.categoryId, categories.id))
+    .innerJoin(brands, eq(components.brandId, brands.id))
+    .innerJoin(gpuModels, eq(components.gpuModelId, gpuModels.id))
+    .orderBy(components.createdAt);
 }

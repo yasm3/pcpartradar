@@ -20,9 +20,11 @@ CREATE TABLE "components" (
 	"id" integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "components_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START WITH 1 CACHE 1),
 	"name" varchar NOT NULL,
 	"slug" varchar NOT NULL,
+	"image_url" varchar NOT NULL,
 	"category_id" integer NOT NULL,
 	"brand_id" integer NOT NULL,
 	"gpu_model_id" integer,
+	"created_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "components_name_unique" UNIQUE("name"),
 	CONSTRAINT "components_slug_unique" UNIQUE("slug")
 );
@@ -61,4 +63,5 @@ ALTER TABLE "components" ADD CONSTRAINT "components_brand_id_brands_id_fk" FOREI
 ALTER TABLE "components" ADD CONSTRAINT "components_gpu_model_id_gpu_models_id_fk" FOREIGN KEY ("gpu_model_id") REFERENCES "public"."gpu_models"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "prices" ADD CONSTRAINT "prices_component_id_components_id_fk" FOREIGN KEY ("component_id") REFERENCES "public"."components"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "prices" ADD CONSTRAINT "prices_vendor_id_vendors_id_fk" FOREIGN KEY ("vendor_id") REFERENCES "public"."vendors"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+CREATE INDEX "name_search_english_index" ON "components" USING gin (to_tsvector('english', "name"));--> statement-breakpoint
 CREATE INDEX "scraped_at_idx" ON "prices" USING btree ("scraped_at");

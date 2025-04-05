@@ -5,3 +5,10 @@ export const ComponentInfoSchema = {
     slug: Type.String(),
   }),
 };
+
+export const ComponentSearchSchema = {
+  querystring: Type.Object({
+    page: Type.Optional(Type.Number({ minimum: 1 })),
+    name: Type.Optional(Type.String({ minLength: 3 })),
+  }),
+};

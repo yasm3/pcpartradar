@@ -1,1 +1,0 @@
-ALTER TABLE "components" ADD COLUMN "image_url" varchar NOT NULL;
