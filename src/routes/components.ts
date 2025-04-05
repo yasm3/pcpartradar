@@ -1,7 +1,13 @@
-import { FastifyInstance } from "fastify";
+import { ServerType } from "../app";
+import { componentInfoHandler} from "../controllers/components";
+import { ComponentInfoSchema } from "../schemas/components";
 
-export async function productRoutes(server: FastifyInstance) {
-  server.get("/:slug",(req, rep) => {
-    return "salut";
-  });
+export async function componentRoutes(server: ServerType) {
+  server.get(
+    "/:slug",
+    {
+      schema: ComponentInfoSchema
+    },
+    componentInfoHandler
+  );
 }

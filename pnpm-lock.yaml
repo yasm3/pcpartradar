@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@fastify/type-provider-typebox':
+        specifier: ^5.1.0
+        version: 5.1.0(@sinclair/typebox@0.34.33)
       dotenv:
         specifier: ^16.4.7
         version: 16.4.7
@@ -488,8 +491,16 @@ packages:
   '@fastify/proxy-addr@5.0.0':
     resolution: {integrity: sha512-37qVVA1qZ5sgH7KpHkkC4z9SK6StIsIcOmpjvMPXNb3vx2GQxhZocogVYbr2PbbeLCQxYIPDok307xEvRZOzGA==}
 
+  '@fastify/type-provider-typebox@5.1.0':
+    resolution: {integrity: sha512-F1AQHeLiKp1hu6GMWm5W6fZ6zXQ0mTV+qHOzrptAie9AYewvFr5Q3blfy8Qmx9gUgwA3Yj+CWvQQJeTwDgTnIg==}
+    peerDependencies:
+      '@sinclair/typebox': '>=0.26 <=0.34'
+
   '@petamoriken/float16@3.9.2':
     resolution: {integrity: sha512-VgffxawQde93xKxT3qap3OH+meZf7VaSB5Sqd4Rqc+FP5alWbpOyan/7tRbOAvynjpG3GpdtAuGU/NdhQpmrog==}
+
+  '@sinclair/typebox@0.34.33':
+    resolution: {integrity: sha512-5HAV9exOMcXRUxo+9iYB5n09XxzCXnfy4VTNW4xnDv+FgjzAGY989C28BIdljKqmF+ZltUwujE3aossvcVtq6g==}
 
   '@types/node@22.14.0':
     resolution: {integrity: sha512-Kmpl+z84ILoG+3T/zQFyAJsU6EPTmOCj8/2+83fSN6djd6I4o7uOuGIH6vq3PrjY5BGitSbFuMN18j3iknubbA==}
@@ -1155,7 +1166,13 @@ snapshots:
       '@fastify/forwarded': 3.0.0
       ipaddr.js: 2.2.0
 
+  '@fastify/type-provider-typebox@5.1.0(@sinclair/typebox@0.34.33)':
+    dependencies:
+      '@sinclair/typebox': 0.34.33
+
   '@petamoriken/float16@3.9.2': {}
+
+  '@sinclair/typebox@0.34.33': {}
 
   '@types/node@22.14.0':
     dependencies:

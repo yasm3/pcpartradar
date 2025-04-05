@@ -1,11 +1,40 @@
 import "dotenv/config";
-import fastify from "fastify";
+import fastify, { ContextConfigDefault, FastifyBaseLogger, FastifyInstance, FastifyReply, FastifyRequest, FastifySchema, RawReplyDefaultExpression, RawRequestDefaultExpression, RawServerDefault, RouteGenericInterface } from "fastify";
 import { drizzle } from "drizzle-orm/node-postgres";
-import { productRoutes } from "./routes/components";
+import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
+import { componentRoutes } from "./routes/components";
 
-const db = drizzle(process.env.DATABASE_URL!);
+export const db = drizzle(process.env.DATABASE_URL!);
 
-const server = fastify();
+const server = fastify().withTypeProvider<TypeBoxTypeProvider>();
+
+// help to automaticly infer routes and handlers
+export type ServerType = typeof server;
+export type FastifyTypeBox = FastifyInstance<
+  RawServerDefault,
+  RawRequestDefaultExpression,
+  RawReplyDefaultExpression,
+  FastifyBaseLogger,
+  TypeBoxTypeProvider
+>;
+
+export type FastifyRequestTypeBox<TSchema extends FastifySchema> = FastifyRequest<
+  RouteGenericInterface,
+  RawServerDefault,
+  RawRequestDefaultExpression,
+  TSchema,
+  TypeBoxTypeProvider
+>;
+
+export type FastifyReplyTypeBox<TSchema extends FastifySchema> = FastifyReply<
+  RouteGenericInterface,
+  RawServerDefault,
+  RawRequestDefaultExpression,
+  RawReplyDefaultExpression,
+  ContextConfigDefault,
+  TSchema,
+  TypeBoxTypeProvider
+>;
 
 server.get("/health", async (req, rep) => {
   return { status: "OK", latestApiVersion: "1" };
@@ -13,8 +42,7 @@ server.get("/health", async (req, rep) => {
 
 (async function () {
   // register routes
-  server.register(productRoutes, { prefix: "/api/v1/components" });
-
+  server.register(componentRoutes, { prefix: "/api/v1/components" });
   server.listen(
     {
       port: 3000,
