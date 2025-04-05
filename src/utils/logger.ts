@@ -3,6 +3,7 @@ export enum LogLevel {
   INFO = "infor",
   WARN = "warni",
   ERROR = "error",
+  SUCCESS = "succe",
 }
 
 const colors: Record<LogLevel, string> = {
@@ -10,6 +11,7 @@ const colors: Record<LogLevel, string> = {
   [LogLevel.INFO]: "\x1b[39m",
   [LogLevel.WARN]: "\x1b[33m",
   [LogLevel.ERROR]: "\x1b[31m",
+  [LogLevel.SUCCESS]: "\x1b[32m",
 };
 
 const resetColor = "\x1b[0m";
@@ -28,4 +30,5 @@ export const logger = {
   info: (message: string) => log(LogLevel.INFO, message),
   warn: (message: string) => log(LogLevel.WARN, message),
   error: (message: string) => log(LogLevel.ERROR, message),
+  success: (message: string) => log(LogLevel.SUCCESS, message),
 };

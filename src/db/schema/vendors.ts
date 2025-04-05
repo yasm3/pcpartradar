@@ -42,7 +42,10 @@ export const prices = pgTable(
       .references(() => vendors.id)
       .notNull(),
     url: varchar().notNull(),
-    scrapedAt: timestamp("scraped_at").defaultNow().notNull(),
+    scrapedAt: timestamp("scraped_at")
+      .defaultNow()
+      .notNull()
+      .$onUpdate(() => new Date()),
   },
   (table) => [index("scraped_at_idx").on(table.scrapedAt)]
 );

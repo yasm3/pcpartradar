@@ -44,9 +44,9 @@ async function updatePrices() {
 
         await db
           .update(prices)
-          .set({ price: newPrice })
+          .set({ price: newPrice, scrapedAt: new Date() })
           .where(eq(prices.id, id));
-        logger.debug("Updated component " + id);
+        logger.success("Updated component " + id);
       } else {
         logger.error(`Unknown "${vendor}" vendor`);
       }
