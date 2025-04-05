@@ -42,7 +42,10 @@ async function updatePrices() {
           return;
         }
 
-        db.update(prices).set({ price }).where(eq(prices.id, id));
+        await db
+          .update(prices)
+          .set({ price: newPrice })
+          .where(eq(prices.id, id));
         logger.debug("Updated component " + id);
       } else {
         logger.error(`Unknown "${vendor}" vendor`);
