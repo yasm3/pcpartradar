@@ -54,8 +54,8 @@ export type FastifyReplyTypeBox<TSchema extends FastifySchema> = FastifyReply<
   TypeBoxTypeProvider
 >;
 
-server.get("/health", async (req, rep) => {
-  return { status: "OK", latestApiVersion: "1" };
+server.get("/api/health", async (req, rep) => {
+  rep.code(200).send({ status: "OK", latestApiVersion: "1" });
 });
 
 (async function () {
@@ -72,6 +72,10 @@ server.get("/health", async (req, rep) => {
           url: "http://localhost:3000",
           description: "Development server",
         },
+        {
+          url: "https://pcpartradar.com",
+          description: "Production server",
+        },
       ],
       tags: [],
       components: {
@@ -83,17 +87,13 @@ server.get("/health", async (req, rep) => {
           },
         },
       },
-      externalDocs: {
-        url: "https://swagger.io",
-        description: "Find more info here",
-      },
     },
   });
 
   server.register(fastifySwaggerUi, {
     routePrefix: "/api/v1/documentation",
     uiConfig: {
-      docExpansion: "full",
+      docExpansion: "list",
       deepLinking: false,
     },
     staticCSP: true,
