@@ -4,6 +4,11 @@ export const ComponentInfoSchema = {
   params: Type.Object({
     slug: Type.String(),
   }),
+  response: {
+    404: Type.Object({
+      error: Type.String(),
+    }),
+  },
 };
 
 export const ComponentSearchSchema = {

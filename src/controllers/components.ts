@@ -1,3 +1,4 @@
+import { FastifyReply } from "fastify";
 import {
   getComponent,
   getComponentByName,
@@ -11,12 +12,21 @@ import {
 } from "../schemas/components";
 
 export const componentInfoHandler = async (
-  req: FastifyRequestTypeBox<typeof ComponentInfoSchema>
+  req: FastifyRequestTypeBox<typeof ComponentInfoSchema>,
+  rep: FastifyReply
 ) => {
   const { slug } = req.params;
-  const component = (await getComponent(slug))[0];
-  const prices = await getLatestComponentPricesByVendor(component.id);
-  return { ...component, prices };
+  let prices = [];
+  const component = await getComponent(slug);
+  console.log(component);
+  if (component.length === 0) {
+    rep.code(404).send({
+      error: "No Product Found",
+    });
+  } else {
+    prices = await getLatestComponentPricesByVendor(component[0].id);
+    rep.code(200).send({ ...component[0], prices });
+  }
 };
 
 export const componentSearchHandler = async (
