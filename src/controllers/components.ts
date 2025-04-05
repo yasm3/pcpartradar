@@ -12,6 +12,7 @@ import {
   ComponentInfoSchema,
   ComponentSearchSchema,
 } from "../schemas/components";
+import { logger } from "../utils/logger";
 
 export const componentInfoHandler = async (
   req: FastifyRequestTypeBox<typeof ComponentInfoSchema>,
@@ -50,7 +51,7 @@ export const componentAddHandler = async (
       rep.code(201).send(res);
     })
     .catch((e) => {
-      console.log(e);
+      logger.error(e);
       rep.code(500).send({});
     });
 };

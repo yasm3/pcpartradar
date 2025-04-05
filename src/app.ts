@@ -20,6 +20,8 @@ import { auth } from "./middlewares/auth";
 import { brandsRoutes } from "./routes/brands";
 import { categoriesRoutes } from "./routes/categories";
 import { gpuModelsRoutes } from "./routes/gpuModels";
+import { registerScrapeTasks } from "./scraper";
+import { logger } from "./utils/logger";
 
 export const db = drizzle(process.env.DATABASE_URL!);
 
@@ -118,11 +120,12 @@ server.get("/api/health", async (req, rep) => {
     },
     (err, addr) => {
       if (err) {
-        console.log(err);
+        logger.error(err.message);
         process.exit(1);
       }
-      console.log(`Server listenting at ${addr}`);
+      logger.info(`Server listenting at ${addr}`);
       server.swagger();
+      registerScrapeTasks();
     }
   );
 })();
