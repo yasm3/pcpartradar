@@ -29,6 +29,7 @@ export const components = pgTable("components", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   name: varchar().notNull().unique(),
   slug: varchar().notNull().unique(),
+  imageUrl: varchar("image_url").notNull(),
   categoryId: integer("category_id")
     .references(() => categories.id)
     .notNull(),

@@ -1,0 +1,24 @@
+{
+  "name": "random GeForce RTX 5080",
+  "slug": "random-geforce-rtx-5080",
+  "imageUrl": "http://blablabla.local/geforce.png",
+  "category": "gpu",
+  "brand": "Random",
+  "gpuModelId": "rtx5080",
+  "prices": [
+    {
+      "vendorId": 1,
+      "url": "http://vendor.local/fiche/blabla.html",
+      "price": 1700.9,
+      "currency": "EUR",
+      "scrapedAt": "2025-04-04T03:03:04"
+    },
+    {
+      "vendorId": 2,
+      "url": "http://autresite.local/fiche/blabla.html",
+      "price": 1500.9,
+      "currency": "EUR",
+      "scrapedAt": "2025-04-04T03:03:04"
+    }
+  ]
+}
