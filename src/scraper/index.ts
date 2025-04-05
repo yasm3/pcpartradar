@@ -44,7 +44,7 @@ async function updatePrices() {
 
         await db
           .update(prices)
-          .set({ price: newPrice, scrapedAt: new Date() })
+          .set({ price: newPrice })
           .where(eq(prices.id, id));
         logger.success("Updated component " + id);
       } else {
