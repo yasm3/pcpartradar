@@ -17,6 +17,8 @@
   "license": "ISC",
   "packageManager": "pnpm@10.7.1",
   "dependencies": {
+    "@fastify/swagger": "^9.4.2",
+    "@fastify/swagger-ui": "^5.2.2",
     "@fastify/type-provider-typebox": "^5.1.0",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.41.0",
