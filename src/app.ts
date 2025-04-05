@@ -17,6 +17,9 @@ import { componentRoutes } from "./routes/components";
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import { auth } from "./middlewares/auth";
+import { brandsRoutes } from "./routes/brands";
+import { categoriesRoutes } from "./routes/categories";
+import { gpuModelsRoutes } from "./routes/gpuModels";
 
 export const db = drizzle(process.env.DATABASE_URL!);
 
@@ -75,7 +78,7 @@ server.get("/health", async (req, rep) => {
         securitySchemes: {
           apiKey: {
             type: "apiKey",
-            name: "apiKey",
+            name: "x-api-key",
             in: "header",
           },
         },
@@ -93,14 +96,6 @@ server.get("/health", async (req, rep) => {
       docExpansion: "full",
       deepLinking: false,
     },
-    uiHooks: {
-      onRequest: function (request, reply, next) {
-        next();
-      },
-      preHandler: function (request, reply, next) {
-        next();
-      },
-    },
     staticCSP: true,
     transformStaticCSP: (header) => header,
     transformSpecification: (swaggerObject, request, reply) => {
@@ -110,7 +105,11 @@ server.get("/health", async (req, rep) => {
   });
 
   // register routes
-  server.register(componentRoutes, { prefix: "/api/v1/components" });
+  const apiPrefix = "/api/v1";
+  server.register(componentRoutes, { prefix: apiPrefix + "/components" });
+  server.register(brandsRoutes, { prefix: apiPrefix + "/brands" });
+  server.register(categoriesRoutes, { prefix: apiPrefix + "/categories" });
+  server.register(gpuModelsRoutes, { prefix: apiPrefix + "/gpuModels" });
   server.addHook("preHandler", auth);
 
   server.listen(

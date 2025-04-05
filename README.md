@@ -13,7 +13,7 @@ Find best price for hardware components.
 
 - [x] ``GET /api/v1/components/<slug> - Info produit (info_produit.json)``
 - [x] ``GET /api/v1/components/?name=rtx3080&page=1,2,3... - Recherche selon filtres (nom puis page)``
-- [ ] ``GET /api/v1/brands``
+- [x] ``GET /api/v1/brands``
 - [ ] ``GET /api/v1/categories``
 - [ ] ``GET /api/v1/gpu-models``
 - [ ] ``GET /api/v1/vendors``
