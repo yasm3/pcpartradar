@@ -68,3 +68,35 @@ export async function getComponentByName(name: string) {
     .innerJoin(gpuModels, eq(components.gpuModelId, gpuModels.id))
     .orderBy(components.createdAt);
 }
+
+interface ComponentAddData {
+  name: string;
+  slug: string;
+  categoryId: number;
+  brandId: number;
+  gpuModelId: number;
+  imageUrl: string;
+}
+
+export async function addComponent({
+  name,
+  slug,
+  categoryId,
+  brandId,
+  gpuModelId,
+  imageUrl,
+}: ComponentAddData) {
+  try {
+    await db.insert(components).values({
+      name,
+      slug,
+      categoryId,
+      brandId,
+      gpuModelId,
+      imageUrl,
+    });
+  } catch (e) {
+    return { error: "no insert possible" };
+  }
+  return { message: "success" };
+}

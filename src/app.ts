@@ -16,6 +16,7 @@ import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
 import { componentRoutes } from "./routes/components";
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
+import { auth } from "./middlewares/auth";
 
 export const db = drizzle(process.env.DATABASE_URL!);
 
@@ -85,6 +86,7 @@ server.get("/health", async (req, rep) => {
       },
     },
   });
+
   server.register(fastifySwaggerUi, {
     routePrefix: "/api/v1/documentation",
     uiConfig: {
@@ -109,6 +111,7 @@ server.get("/health", async (req, rep) => {
 
   // register routes
   server.register(componentRoutes, { prefix: "/api/v1/components" });
+  server.addHook("preHandler", auth);
 
   server.listen(
     {

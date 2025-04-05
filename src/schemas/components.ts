@@ -17,3 +17,14 @@ export const ComponentSearchSchema = {
     name: Type.Optional(Type.String({ minLength: 3 })),
   }),
 };
+
+export const ComponentAddSchema = {
+  body: Type.Object({
+    name: Type.String(),
+    slug: Type.String(),
+    categoryId: Type.Number(),
+    brandId: Type.Number(),
+    gpuModelId: Type.Number(),
+    imageUrl: Type.String(),
+  }),
+};

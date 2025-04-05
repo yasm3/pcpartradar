@@ -1,5 +1,6 @@
 import { FastifyReply } from "fastify";
 import {
+  addComponent,
   getComponent,
   getComponentByName,
   getLatestComponentPricesByVendor,
@@ -7,6 +8,7 @@ import {
 } from "../actions/components";
 import { FastifyRequestTypeBox } from "../app";
 import {
+  ComponentAddSchema,
   ComponentInfoSchema,
   ComponentSearchSchema,
 } from "../schemas/components";
@@ -18,7 +20,6 @@ export const componentInfoHandler = async (
   const { slug } = req.params;
   let prices = [];
   const component = await getComponent(slug);
-  console.log(component);
   if (component.length === 0) {
     rep.code(404).send({
       error: "No Product Found",
@@ -37,4 +38,19 @@ export const componentSearchHandler = async (
     return getComponentByName(name);
   }
   return getPaginatedComponents(page);
+};
+
+export const componentAddHandler = async (
+  req: FastifyRequestTypeBox<typeof ComponentAddSchema>,
+  rep: FastifyReply
+) => {
+  const data = req.body;
+  addComponent(data)
+    .then((res) => {
+      rep.code(201).send(res);
+    })
+    .catch((e) => {
+      console.log(e);
+      rep.code(500).send({});
+    });
 };
