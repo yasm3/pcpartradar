@@ -109,7 +109,7 @@ server.get("/api/health", async (req, rep) => {
   });
 
   server.register(fastifyStatic, {
-    root: path.join(__dirname, "public"),
+    root: path.join(__dirname, "../public"),
   });
 
   server.get("/", (req, rep) => {
