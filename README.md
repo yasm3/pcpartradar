@@ -5,6 +5,7 @@ Find best price for hardware components.
 ## Roadmap
 
 - [ ] API V1 (WIP)
+- [x] CI/CD Pipeline to automatically deploy to server
 - [ ] Make a good frontend
 - [ ] Make a Discord Bot with commands and alerts
 
