@@ -3,10 +3,10 @@ name: Build and deploy app as Docker Image
 on:
   push:
     branches: 
-      - prod
+      - main
   pull_request: 
     branches: 
-      - prod
+      - main
 
 jobs:
   deploy:
