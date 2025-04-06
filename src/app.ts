@@ -117,6 +117,7 @@ server.get("/api/health", async (req, rep) => {
   server.listen(
     {
       port: 3000,
+      host: "::",
     },
     (err, addr) => {
       if (err) {
