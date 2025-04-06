@@ -22,6 +22,8 @@ import { categoriesRoutes } from "./routes/categories";
 import { gpuModelsRoutes } from "./routes/gpuModels";
 import { registerScrapeTasks } from "./scraper";
 import { logger } from "./utils/logger";
+import fastifyStatic from "@fastify/static";
+import path from "node:path";
 
 export const db = drizzle(process.env.DATABASE_URL!);
 
@@ -104,6 +106,14 @@ server.get("/api/health", async (req, rep) => {
       return swaggerObject;
     },
     transformSpecificationClone: true,
+  });
+
+  server.register(fastifyStatic, {
+    root: path.join(__dirname, "public"),
+  });
+
+  server.get("/", (req, rep) => {
+    rep.sendFile("index.html");
   });
 
   // register routes
