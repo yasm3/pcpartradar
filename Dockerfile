@@ -17,7 +17,7 @@ RUN corepack enable
 COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/package.json ./
 COPY --from=build /app/build ./build
-COPY --from=build /app/public ./public
+COPY --from=build /app/public ./build/public
 
 ENV NODE_ENV=production
 
